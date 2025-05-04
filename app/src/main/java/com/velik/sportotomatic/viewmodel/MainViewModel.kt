@@ -43,7 +43,7 @@ class MainViewModel : ViewModel() {
     }
 
     private fun generateFakeMatches(): List<Match> {
-        return List(5) { index ->
+        return List(15) { index ->
             Match(
                 id = index,
                 homeTeam = "Takım ${index + 1}A",

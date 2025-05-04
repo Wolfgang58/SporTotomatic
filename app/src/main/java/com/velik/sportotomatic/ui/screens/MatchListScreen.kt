@@ -24,12 +24,13 @@ fun MatchListScreen(viewModel: MainViewModel = viewModel()) {
             items(matches) { match ->
                 MatchItem(
                     match = match,
-                    onSelectionChange = { result ->
-                        viewModel.updateUserSelection(match.id, listOf(result), List<String>) // ← burası düzeltildi
+                    onSelectionChange = { resultList ->
+                        viewModel.updateUserSelection(match.id, resultList)
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
+
         }
 
         Button(
