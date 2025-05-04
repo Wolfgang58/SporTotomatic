@@ -6,6 +6,7 @@ data class Match(
     val awayTeam: String,
     val date: String,
     val probabilities: Map<String, Double>,
+    val result: String,
     var selectedOptions: List<String> = emptyList()
 
 )
