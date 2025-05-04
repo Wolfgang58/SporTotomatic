@@ -14,6 +14,8 @@ import com.velik.sportotomatic.viewmodel.MainViewModel
 @Composable
 fun MatchListScreen(viewModel: MainViewModel = viewModel()) {
     val matches by viewModel.matches.collectAsState()
+    val userSelections by viewModel.userSelections.collectAsState()
+
 
     Column(
         modifier = Modifier
@@ -24,8 +26,9 @@ fun MatchListScreen(viewModel: MainViewModel = viewModel()) {
             items(matches) { match ->
                 MatchItem(
                     match = match,
-                    onSelectionChange = { resultList ->
-                        viewModel.updateUserSelection(match.id, resultList)
+                    selectedResults = userSelections[match.id] ?: emptyList(),
+                    onSelectionChange = { updatedList ->
+                        viewModel.updateUserSelection(match.id, updatedList)
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
