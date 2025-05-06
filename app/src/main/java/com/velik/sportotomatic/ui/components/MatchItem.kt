@@ -16,7 +16,7 @@ import com.velik.sportotomatic.domain.model.Match
 @Composable
 fun MatchItem(
     match: Match,
-    selectedResults: List<String>, // çoklu seçim
+    selectedResults: List<String>,
     onSelectionChange: (List<String>) -> Unit
 ) {
     Card(
@@ -33,19 +33,20 @@ fun MatchItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Tarih
+            // Maç Tarihi
             Text(
                 text = match.date,
                 fontSize = 14.sp,
-                color = Color.Gray,
+                color = Color(0xFF333333),
                 modifier = Modifier.width(70.dp)
             )
 
-            // Takımlar
+            // Takım İsimleri
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "${match.homeTeam} vs ${match.awayTeam}",
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
+                    color = Color(0xFF333333)
                 )
             }
 
@@ -57,8 +58,7 @@ fun MatchItem(
                         modifier = Modifier
                             .size(36.dp)
                             .background(
-                                if (isSelected) MaterialTheme.colorScheme.primary
-                                else Color.LightGray,
+                                if (isSelected) Color(0xFF00A651) else Color(0xFFD3D3D3),
                                 shape = RoundedCornerShape(8.dp)
                             )
                             .clickable {
