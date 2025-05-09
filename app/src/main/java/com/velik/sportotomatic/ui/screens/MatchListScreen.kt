@@ -12,9 +12,15 @@ import com.velik.sportotomatic.ui.components.MatchItem
 import com.velik.sportotomatic.viewmodel.MainViewModel
 
 @Composable
-fun MatchListScreen(viewModel: MainViewModel = viewModel()) {
+fun MatchListScreen(
+    viewModel: MainViewModel = viewModel(),
+    onShowCoupons: () -> Unit
+) {
     val matches by viewModel.matches.collectAsState()
+    val coupons by viewModel.generatedCoupons.collectAsState()
+    val price by viewModel.totalPrice.collectAsState()
     val userSelections by viewModel.userSelections.collectAsState()
+
 
 
     Column(
@@ -42,5 +48,20 @@ fun MatchListScreen(viewModel: MainViewModel = viewModel()) {
         ) {
             Text("Kuponları Oluştur")
         }
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Button(
+            onClick = { onShowCoupons() },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Kuponları Göster")
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Toplam Kupon: ${coupons.size} • Tutar: $price TL",
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
     }
 }

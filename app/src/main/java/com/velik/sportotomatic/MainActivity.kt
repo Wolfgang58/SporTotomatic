@@ -3,7 +3,8 @@ package com.velik.sportotomatic
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.velik.sportotomatic.ui.screens.MatchListScreen
+import androidx.navigation.compose.rememberNavController
+import com.velik.sportotomatic.ui.navigation.AppNavigation
 import com.velik.sportotomatic.ui.theme.SportotomaticTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +12,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SportotomaticTheme {
-                MatchListScreen()
+                val navController = rememberNavController()
+                AppNavigation(navController)
             }
         }
     }

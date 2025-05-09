@@ -5,6 +5,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import com.velik.sportotomatic.domain.model.Match
 import com.velik.sportotomatic.util.CombinationGenerator
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+
 
 class MainViewModel : ViewModel() {
 
@@ -54,5 +59,9 @@ class MainViewModel : ViewModel() {
             )
         }
     }
+    val totalPrice: StateFlow<Int> = _generatedCoupons
+        .map { it.size * 10 } // Her kupon 10 TL (ileride dinamik yapılabilir)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
+
 
 }
