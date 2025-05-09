@@ -18,7 +18,7 @@ fun MatchListScreen(
 ) {
     val matches by viewModel.matches.collectAsState()
     val coupons by viewModel.generatedCoupons.collectAsState()
-    val price by viewModel.totalPrice.collectAsState()
+    val price = viewModel.calculateTotalPrice()
     val userSelections by viewModel.userSelections.collectAsState()
 
 

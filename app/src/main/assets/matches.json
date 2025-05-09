@@ -1,0 +1,17 @@
+[
+  { "id": 0, "homeTeam": "Başakşehir FK", "awayTeam": "Fenerbahçe A.Ş.", "date": "2025-05-09", "probabilities": { "1": 0.4, "X": 0.3, "2": 0.3 } },
+  { "id": 1, "homeTeam": "Gaziantep FK A.Ş.", "awayTeam": "Alanyaspor", "date": "2025-05-09", "probabilities": { "1": 0.35, "X": 0.35, "2": 0.3 } },
+  { "id": 2, "homeTeam": "Eyüpspor", "awayTeam": "Kasımpaşa A.Ş.", "date": "2025-05-09", "probabilities": { "1": 0.38, "X": 0.32, "2": 0.3 } },
+  { "id": 3, "homeTeam": "Konyaspor", "awayTeam": "Çaykur Rizespor A.Ş.", "date": "2025-05-09", "probabilities": { "1": 0.4, "X": 0.3, "2": 0.3 } },
+  { "id": 4, "homeTeam": "Trabzonspor A.Ş.", "awayTeam": "Galatasaray A.Ş.", "date": "2025-05-09", "probabilities": { "1": 0.3, "X": 0.3, "2": 0.4 } },
+  { "id": 5, "homeTeam": "Sivasspor", "awayTeam": "Bodrum FK", "date": "2025-05-09", "probabilities": { "1": 0.5, "X": 0.25, "2": 0.25 } },
+  { "id": 6, "homeTeam": "Beşiktaş A.Ş.", "awayTeam": "Adana Demirspor A.Ş.", "date": "2025-05-09", "probabilities": { "1": 0.45, "X": 0.3, "2": 0.25 } },
+  { "id": 7, "homeTeam": "Göztepe A.Ş.", "awayTeam": "Hatayspor", "date": "2025-05-09", "probabilities": { "1": 0.4, "X": 0.3, "2": 0.3 } },
+  { "id": 8, "homeTeam": "Kayserispor", "awayTeam": "Antalyaspor", "date": "2025-05-09", "probabilities": { "1": 0.33, "X": 0.34, "2": 0.33 } },
+  { "id": 9, "homeTeam": "B. Leverkusen", "awayTeam": "B. Dortmund", "date": "2025-05-09", "probabilities": { "1": 0.4, "X": 0.3, "2": 0.3 } },
+  { "id": 10, "homeTeam": "Monaco", "awayTeam": "Lyon", "date": "2025-05-09", "probabilities": { "1": 0.35, "X": 0.35, "2": 0.3 } },
+  { "id": 11, "homeTeam": "Feyenoord", "awayTeam": "PSV", "date": "2025-05-09", "probabilities": { "1": 0.4, "X": 0.3, "2": 0.3 } },
+  { "id": 12, "homeTeam": "Liverpool", "awayTeam": "Arsenal", "date": "2025-05-09", "probabilities": { "1": 0.38, "X": 0.32, "2": 0.3 } },
+  { "id": 13, "homeTeam": "Barcelona", "awayTeam": "Real Madrid", "date": "2025-05-09", "probabilities": { "1": 0.33, "X": 0.34, "2": 0.33 } },
+  { "id": 14, "homeTeam": "Lazio", "awayTeam": "Juventus", "date": "2025-05-09", "probabilities": { "1": 0.36, "X": 0.34, "2": 0.3 } }
+]
