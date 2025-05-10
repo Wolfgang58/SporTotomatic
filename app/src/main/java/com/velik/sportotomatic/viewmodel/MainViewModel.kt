@@ -1,16 +1,15 @@
 package com.velik.sportotomatic.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.velik.sportotomatic.data.MatchRepository
+import androidx.lifecycle.ViewModel
+import com.velik.sportotomatic.data.repository.MatchRepository
 import com.velik.sportotomatic.domain.model.Match
 import com.velik.sportotomatic.util.CombinationGenerator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel : ViewModel() {
 
-    private val repository = MatchRepository(application)
+    private val repository = MatchRepository()
 
     private val _matches = MutableStateFlow<List<Match>>(emptyList())
     val matches: StateFlow<List<Match>> = _matches
@@ -22,21 +21,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val generatedCoupons: StateFlow<List<List<String>>> = _generatedCoupons
 
     init {
-        _matches.value = repository.loadMatchesFromAssets()
+        _matches.value = repository.getMatches()
     }
-    fun calculateTotalPrice(): Int {
-        val selectionCounts = _userSelections.value.values.map { it.size }
-        return when {
-            selectionCounts.all { it == 1 } -> 10
-            selectionCounts.count { it == 2 } == 1 && selectionCounts.count { it == 1 } == 14 -> 20
-            selectionCounts.count { it == 3 } == 1 && selectionCounts.count { it == 1 } == 14 -> 30
-            else -> {
-                val totalCombinations = selectionCounts.fold(1) { acc, size -> acc * size }
-                10 * totalCombinations
-            }
-        }
-    }
-
 
     fun updateUserSelection(matchId: Int, selections: List<String>) {
         val updated = _userSelections.value.toMutableMap()
@@ -53,4 +39,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _generatedCoupons.value = combinations
     }
 
+    fun calculateTotalPrice(): Int {
+        val selectionCounts = _userSelections.value.values.map { it.size }
+        return when {
+            selectionCounts.all { it == 1 } -> 10
+            selectionCounts.count { it == 2 } == 1 && selectionCounts.count { it == 1 } == 14 -> 20
+            selectionCounts.count { it == 3 } == 1 && selectionCounts.count { it == 1 } == 14 -> 30
+            else -> {
+                val totalCombinations = selectionCounts.fold(1) { acc, size -> acc * size }
+                10 * totalCombinations
+            }
+        }
+    }
 }

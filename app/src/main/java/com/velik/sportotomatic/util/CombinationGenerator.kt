@@ -2,12 +2,13 @@ package com.velik.sportotomatic.util
 
 object CombinationGenerator {
 
-    fun generateCombinations(input: List<List<String>>): List<List<String>> {
-        val result = mutableListOf<List<String>>()
-        generateRecursive(input, 0, mutableListOf(), result)
-        return result
-    }
+    fun generateCombinations(selections: List<List<String>>): List<List<String>> {
+        if (selections.isEmpty()) return emptyList()
 
+        return selections.fold(listOf(listOf<String>())) { acc, list ->
+            acc.flatMap { partial -> list.map { partial + it } }
+        }
+    }
     private fun generateRecursive(
         input: List<List<String>>,
         index: Int,

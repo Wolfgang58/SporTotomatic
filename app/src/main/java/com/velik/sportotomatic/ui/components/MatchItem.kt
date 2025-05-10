@@ -5,7 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +33,6 @@ fun MatchItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Maç Tarihi
             Text(
                 text = match.date,
                 fontSize = 14.sp,
@@ -41,7 +40,6 @@ fun MatchItem(
                 modifier = Modifier.width(70.dp)
             )
 
-            // Takım İsimleri
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "${match.homeTeam} vs ${match.awayTeam}",
@@ -50,7 +48,6 @@ fun MatchItem(
                 )
             }
 
-            // Seçenekler: 1 X 2
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 listOf("1", "X", "2").forEach { result ->
                     val isSelected = selectedResults.contains(result)

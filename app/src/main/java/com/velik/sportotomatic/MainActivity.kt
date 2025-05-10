@@ -3,8 +3,11 @@ package com.velik.sportotomatic
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.rememberNavController
-import com.velik.sportotomatic.ui.navigation.AppNavigation
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.*
+import com.velik.sportotomatic.ui.screens.CouponListScreen
+import com.velik.sportotomatic.ui.screens.MatchListScreen
 import com.velik.sportotomatic.ui.theme.SportotomaticTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,9 +15,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SportotomaticTheme {
-                val navController = rememberNavController()
-                AppNavigation(navController)
+                AppNavigator()
             }
+        }
+    }
+}
+
+@Composable
+fun AppNavigator() {
+    val navController = rememberNavController()
+
+    NavHost(navController, startDestination = "matchList") {
+        composable("matchList") {
+            MatchListScreen(navController)
+        }
+        composable("couponList") {
+            CouponListScreen(onBack = { navController.popBackStack() })
         }
     }
 }

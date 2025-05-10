@@ -8,20 +8,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.velik.sportotomatic.ui.components.MatchItem
 import com.velik.sportotomatic.viewmodel.MainViewModel
 
 @Composable
 fun MatchListScreen(
-    viewModel: MainViewModel = viewModel(),
-    onShowCoupons: () -> Unit
+    navController: NavController,
+    viewModel: MainViewModel = viewModel()
 ) {
     val matches by viewModel.matches.collectAsState()
-    val coupons by viewModel.generatedCoupons.collectAsState()
-    val price = viewModel.calculateTotalPrice()
     val userSelections by viewModel.userSelections.collectAsState()
-
-
 
     Column(
         modifier = Modifier
@@ -30,38 +27,26 @@ fun MatchListScreen(
     ) {
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(matches) { match ->
+                val selected = userSelections[match.id] ?: emptyList()
                 MatchItem(
                     match = match,
-                    selectedResults = userSelections[match.id] ?: emptyList(),
+                    selectedResults = selected,
                     onSelectionChange = { updatedList ->
                         viewModel.updateUserSelection(match.id, updatedList)
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
-
         }
 
         Button(
-            onClick = { viewModel.generateCoupons() },
+            onClick = {
+                viewModel.generateCoupons()
+                navController.navigate("couponList")
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Kuponları Oluştur")
         }
-        Spacer(modifier = Modifier.height(4.dp))
-
-        Button(
-            onClick = { onShowCoupons() },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Kuponları Göster")
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "Toplam Kupon: ${coupons.size} • Tutar: $price TL",
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
     }
 }

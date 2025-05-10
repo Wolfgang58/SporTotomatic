@@ -5,8 +5,5 @@ data class Match(
     val homeTeam: String,
     val awayTeam: String,
     val date: String,
-    val probabilities: Map<String, Double>,
-    val result: String,
-    var selectedOptions: List<String> = emptyList()
-
+    val probabilities: Map<String, Double>
 )
