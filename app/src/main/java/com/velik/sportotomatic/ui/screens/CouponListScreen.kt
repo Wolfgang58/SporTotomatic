@@ -20,7 +20,7 @@ fun CouponListScreen(
     onBack: () -> Unit
 ) {
     val coupons = viewModel.generatedCoupons.collectAsState().value
-    val price = viewModel.calculateTotalPrice()
+    val price = viewModel.totalPrice.collectAsState().value
 
     Scaffold(
         topBar = {
@@ -41,15 +41,19 @@ fun CouponListScreen(
                 .fillMaxSize()
         ) {
             Text(
-                text = "Toplam Kupon: ${coupons.size}  •  Tutar: ${price} TL",
+                text = "Toplam Kupon: ${coupons.size}  •  Tutar: $price TL",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            LazyColumn {
-                items(coupons) { combo ->
-                    Text(text = combo.joinToString(" - "))
-                    Divider(modifier = Modifier.padding(vertical = 8.dp))
+            if (coupons.isEmpty()) {
+                Text("Henüz kupon oluşturulmadı.")
+            } else {
+                LazyColumn {
+                    items(coupons) { combo ->
+                        Text(text = combo.joinToString(" - "))
+                        Divider(modifier = Modifier.padding(vertical = 8.dp))
+                    }
                 }
             }
         }

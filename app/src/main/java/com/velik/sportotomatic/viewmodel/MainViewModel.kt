@@ -1,15 +1,12 @@
 package com.velik.sportotomatic.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.velik.sportotomatic.data.repository.MatchRepository
 import com.velik.sportotomatic.domain.model.Match
 import com.velik.sportotomatic.util.CombinationGenerator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class MainViewModel : ViewModel() {
-
-    private val repository = MatchRepository()
 
     private val _matches = MutableStateFlow<List<Match>>(emptyList())
     val matches: StateFlow<List<Match>> = _matches
@@ -20,8 +17,11 @@ class MainViewModel : ViewModel() {
     private val _generatedCoupons = MutableStateFlow<List<List<String>>>(emptyList())
     val generatedCoupons: StateFlow<List<List<String>>> = _generatedCoupons
 
+    private val _totalPrice = MutableStateFlow(0)
+    val totalPrice: StateFlow<Int> = _totalPrice
+
     init {
-        _matches.value = repository.getMatches()
+        _matches.value = generateFakeMatches()
     }
 
     fun updateUserSelection(matchId: Int, selections: List<String>) {
@@ -31,24 +31,34 @@ class MainViewModel : ViewModel() {
     }
 
     fun generateCoupons() {
-        val sortedSelections = _matches.value.map { match ->
-            _userSelections.value[match.id] ?: listOf("1", "X", "2")
+        val selections = _matches.value.map { match ->
+            _userSelections.value[match.id]?.takeIf { it.isNotEmpty() } ?: listOf("1", "X", "2")
         }
 
-        val combinations = CombinationGenerator.generateCombinations(sortedSelections)
+        val combinations = CombinationGenerator.generateCombinations(selections)
         _generatedCoupons.value = combinations
+
+        _totalPrice.value = calculatePrice(selections)
     }
 
-    fun calculateTotalPrice(): Int {
-        val selectionCounts = _userSelections.value.values.map { it.size }
-        return when {
-            selectionCounts.all { it == 1 } -> 10
-            selectionCounts.count { it == 2 } == 1 && selectionCounts.count { it == 1 } == 14 -> 20
-            selectionCounts.count { it == 3 } == 1 && selectionCounts.count { it == 1 } == 14 -> 30
-            else -> {
-                val totalCombinations = selectionCounts.fold(1) { acc, size -> acc * size }
-                10 * totalCombinations
-            }
+    private fun calculatePrice(selections: List<List<String>>): Int {
+        // Örnek hesaplama: her fazla seçim, fiyatı katlar.
+        var total = 1
+        for (s in selections) {
+            total *= s.size
+        }
+        return total * 10 // örnek olarak 10 TL baz fiyat
+    }
+
+    private fun generateFakeMatches(): List<Match> {
+        return List(15) { index ->
+            Match(
+                id = index,
+                homeTeam = "Takım ${index + 1}A",
+                awayTeam = "Takım ${index + 1}B",
+                date = "2025-05-${10 + index}",
+                probabilities = mapOf("1" to 0.4, "X" to 0.3, "2" to 0.3)
+            )
         }
     }
 }
