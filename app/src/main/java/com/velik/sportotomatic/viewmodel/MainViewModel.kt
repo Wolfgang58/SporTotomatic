@@ -37,17 +37,11 @@ class MainViewModel : ViewModel() {
 
         val combinations = CombinationGenerator.generateCombinations(selections)
         _generatedCoupons.value = combinations
-
         _totalPrice.value = calculatePrice(selections)
     }
 
     private fun calculatePrice(selections: List<List<String>>): Int {
-        // Örnek hesaplama: her fazla seçim, fiyatı katlar.
-        var total = 1
-        for (s in selections) {
-            total *= s.size
-        }
-        return total * 10 // örnek olarak 10 TL baz fiyat
+        return selections.fold(1) { acc, list -> acc * list.size } * 10
     }
 
     private fun generateFakeMatches(): List<Match> {

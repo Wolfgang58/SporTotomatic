@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.velik.sportotomatic.ui.components.MatchItem
 import com.velik.sportotomatic.viewmodel.MainViewModel
+import com.velik.sportotomatic.ui.components.MatchItem
 
 @Composable
 fun MatchListScreen(
@@ -31,8 +31,8 @@ fun MatchListScreen(
                 MatchItem(
                     match = match,
                     selectedResults = selected,
-                    onSelectionChange = { updatedList ->
-                        viewModel.updateUserSelection(match.id, updatedList)
+                    onSelectionChange = { updated ->
+                        viewModel.updateUserSelection(match.id, updated)
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -44,7 +44,9 @@ fun MatchListScreen(
                 viewModel.generateCoupons()
                 navController.navigate("couponList")
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         ) {
             Text("Kuponları Oluştur")
         }

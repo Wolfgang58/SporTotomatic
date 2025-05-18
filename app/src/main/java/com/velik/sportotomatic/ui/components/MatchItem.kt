@@ -20,10 +20,8 @@ fun MatchItem(
     onSelectionChange: (List<String>) -> Unit
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
     ) {
         Row(
@@ -33,21 +31,10 @@ fun MatchItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                text = match.date,
-                fontSize = 14.sp,
-                color = Color(0xFF333333),
-                modifier = Modifier.width(70.dp)
-            )
-
+            Text(text = match.date, fontSize = 14.sp, modifier = Modifier.width(70.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "${match.homeTeam} vs ${match.awayTeam}",
-                    fontSize = 16.sp,
-                    color = Color(0xFF333333)
-                )
+                Text("${match.homeTeam} vs ${match.awayTeam}", fontSize = 16.sp)
             }
-
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 listOf("1", "X", "2").forEach { result ->
                     val isSelected = selectedResults.contains(result)
@@ -68,11 +55,7 @@ fun MatchItem(
                             },
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = result,
-                            color = if (isSelected) Color.White else Color.Black,
-                            fontSize = 14.sp
-                        )
+                        Text(text = result, color = Color.White, fontSize = 14.sp)
                     }
                 }
             }
