@@ -6,6 +6,7 @@ import com.velik.sportotomatic.util.CombinationGenerator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
+
 class MainViewModel : ViewModel() {
 
     private val _matches = MutableStateFlow<List<Match>>(emptyList())
@@ -21,7 +22,15 @@ class MainViewModel : ViewModel() {
     val totalPrice: StateFlow<Int> = _totalPrice
 
     init {
-        _matches.value = generateFakeMatches()
+        _matches.value = List(15) { index ->
+            Match(
+                id = index,
+                homeTeam = "Takım ${index + 1}A",
+                awayTeam = "Takım ${index + 1}B",
+                date = "2025-05-${10 + index}",
+                probabilities = mapOf("1" to 0.4, "X" to 0.3, "2" to 0.3)
+            )
+        }
     }
 
     fun updateUserSelection(matchId: Int, selections: List<String>) {
@@ -32,27 +41,14 @@ class MainViewModel : ViewModel() {
 
     fun generateCoupons() {
         val selections = _matches.value.map { match ->
-            _userSelections.value[match.id]?.takeIf { it.isNotEmpty() } ?: listOf("1", "X", "2")
+            _userSelections.value[match.id]?.ifEmpty { listOf("1", "X", "2") }
+                ?: listOf("1", "X", "2")
         }
 
         val combinations = CombinationGenerator.generateCombinations(selections)
         _generatedCoupons.value = combinations
-        _totalPrice.value = calculatePrice(selections)
-    }
 
-    private fun calculatePrice(selections: List<List<String>>): Int {
-        return selections.fold(1) { acc, list -> acc * list.size } * 10
-    }
-
-    private fun generateFakeMatches(): List<Match> {
-        return List(15) { index ->
-            Match(
-                id = index,
-                homeTeam = "Takım ${index + 1}A",
-                awayTeam = "Takım ${index + 1}B",
-                date = "2025-05-${10 + index}",
-                probabilities = mapOf("1" to 0.4, "X" to 0.3, "2" to 0.3)
-            )
-        }
+        val total = combinations.size * 10 // 1 kupon = 10 TL
+        _totalPrice.value = total
     }
 }

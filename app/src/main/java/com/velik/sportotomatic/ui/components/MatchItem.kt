@@ -19,46 +19,34 @@ fun MatchItem(
     selectedResults: List<String>,
     onSelectionChange: (List<String>) -> Unit
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(text = match.date, fontSize = 14.sp, modifier = Modifier.width(70.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text("${match.homeTeam} vs ${match.awayTeam}", fontSize = 16.sp)
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                listOf("1", "X", "2").forEach { result ->
-                    val isSelected = selectedResults.contains(result)
-                    Box(
-                        modifier = Modifier
-                            .size(36.dp)
-                            .background(
-                                if (isSelected) Color(0xFF00A651) else Color(0xFFD3D3D3),
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .clickable {
-                                val updatedSelections = if (isSelected) {
-                                    selectedResults - result
-                                } else {
-                                    selectedResults + result
-                                }
-                                onSelectionChange(updatedSelections)
-                            },
-                        contentAlignment = Alignment.Center
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Text("${match.homeTeam} vs ${match.awayTeam} (${match.date})")
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                listOf("1", "X", "2").forEach { option ->
+                    val isSelected = selectedResults.contains(option)
+                    Button(
+                        onClick = {
+                            val updated = if (isSelected) {
+                                selectedResults - option
+                            } else {
+                                selectedResults + option
+                            }
+                            onSelectionChange(updated)
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (isSelected) Color.Green else Color.LightGray
+                        )
                     ) {
-                        Text(text = result, color = Color.White, fontSize = 14.sp)
+                        Text(option)
                     }
                 }
             }
         }
     }
 }
+
+

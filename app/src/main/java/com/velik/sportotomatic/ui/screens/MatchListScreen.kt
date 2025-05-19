@@ -20,11 +20,7 @@ fun MatchListScreen(
     val matches by viewModel.matches.collectAsState()
     val userSelections by viewModel.userSelections.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(matches) { match ->
                 val selected = userSelections[match.id] ?: emptyList()

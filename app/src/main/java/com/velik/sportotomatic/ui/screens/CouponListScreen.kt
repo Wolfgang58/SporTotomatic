@@ -41,7 +41,7 @@ fun CouponListScreen(
                 .fillMaxSize()
         ) {
             Text(
-                text = "Toplam Kupon: ${coupons.size}  •  Tutar: $price TL",
+                text = "Toplam Kupon: ${coupons.size}  •  Tutar: ${price} TL",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
